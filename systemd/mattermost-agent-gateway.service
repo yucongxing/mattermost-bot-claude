@@ -1,0 +1,19 @@
+[Unit]
+Description=Mattermost Agent Gateway
+After=network-online.target
+Wants=network-online.target
+
+[Service]
+Type=simple
+User=agent
+Group=agent
+WorkingDirectory=/opt/mattermost-agent-gateway
+EnvironmentFile=/opt/mattermost-agent-gateway/.env
+ExecStart=/opt/mattermost-agent-gateway/.venv/bin/uvicorn app.main:app --host 127.0.0.1 --port 8088
+Restart=always
+RestartSec=3
+NoNewPrivileges=true
+PrivateTmp=true
+
+[Install]
+WantedBy=multi-user.target
